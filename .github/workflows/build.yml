@@ -10,12 +10,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout ZMK (firmware)
-        uses: actions/checkout@v4
-        with:
-          repository: lahix107/zmk
-          path: zmk
-
       - name: Install west and deps
         uses: actions/setup-python@v5
         with:
@@ -26,24 +20,22 @@ jobs:
 
       - name: Init west workspace
         run: |
-          rm -rf .west
+          rm -rf .west zmk config
           west init -m https://github.com/lahix107/lily58-zmk-config --mr main
           west update
 
       - name: Build left
-        working-directory: config
         run: |
-          west build -s zmk/app -d build/left -b nice_nano_v2 -- -DSHIELD=lily58_nrf_split_left
+          west build -s app -d build/left -b nice_nano_v2 -- -DSHIELD=lily58_nrf_split_left
 
       - name: Build right
-        working-directory: config
         run: |
-          west build -s zmk/app -d build/right -b nice_nano_v2 -- -DSHIELD=lily58_nrf_split_right
+          west build -s app -d build/right -b nice_nano_v2 -- -DSHIELD=lily58_nrf_split_right
 
       - name: Upload UF2 artifacts
         uses: actions/upload-artifact@v4
         with:
           name: firmware
           path: |
-            config/build/left/zephyr/*.uf2
-            config/build/right/zephyr/*.uf2
+            build/left/zephyr/*.uf2
+            build/right/zephyr/*.uf2
