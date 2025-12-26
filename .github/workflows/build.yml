@@ -24,6 +24,13 @@ jobs:
           west init -m https://github.com/lahix107/lily58-zmk-config --mr main
           west update
 
+      - name: Show workspace layout
+        run: |
+          pwd
+          ls
+          ls zmk
+          ls config
+
       - name: Build left
         run: |
           west build -s app -d build/left -b nice_nano_v2 -- -DSHIELD=lily58_nrf_split_left
