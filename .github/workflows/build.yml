@@ -16,12 +16,6 @@ jobs:
           repository: lahix107/zmk
           path: zmk
 
-      - name: Checkout config
-        uses: actions/checkout@v4
-        with:
-          repository: lahix107/lily58-zmk-config
-          path: config
-
       - name: Install west and deps
         uses: actions/setup-python@v5
         with:
