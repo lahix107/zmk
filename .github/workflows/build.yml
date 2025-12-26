@@ -31,9 +31,8 @@ jobs:
           pip install west
 
       - name: Init west workspace
-        working-directory: config
         run: |
-          west init -l .
+          west init -m https://github.com/lahix107/lily58-zmk-config --mr main
           west update
 
       - name: Build left
